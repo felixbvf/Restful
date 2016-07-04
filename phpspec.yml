@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Restful
+        psr4_prefix: Restful
+        src_path: app
