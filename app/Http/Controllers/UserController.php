@@ -34,7 +34,7 @@ class UserController extends Controller
             'password'  => 'required'
             ];
 
-        // try {
+        try {
          // Ejecutamos el validador, en caso de que falle devolvemos la respuesta
         $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -47,10 +47,10 @@ class UserController extends Controller
         User::create($request->all());
         return ['created' => true];
         
-        // } catch (Exception $e) {
-        //     \Log::info('Error creating user: '.$e);
-        //     return \Response::json(['created' => false], 500);
-        // }
+        } catch (Exception $e) {
+            \Log::info('Error creating user: '.$e);
+            return \Response::json(['created' => false], 500);
+        }
     }
 
    
@@ -62,7 +62,7 @@ class UserController extends Controller
     }
 
   
-    public function edit($id)
+    public function edit($user)
     {
         //
     }
@@ -70,7 +70,7 @@ class UserController extends Controller
     
     public function update(Request $request, $user)
     {
-        $user = User::find($id);
+        $user = User::find($user);
         $user->update($request->all());
         return ['updated' => true];
     }
@@ -78,7 +78,7 @@ class UserController extends Controller
     
     public function destroy($user)
     {
-        User::destroy($id);
+        User::destroy($user);
         return ['deleted' => true];
     }
 

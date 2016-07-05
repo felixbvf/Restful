@@ -31,7 +31,12 @@ class UserTest extends TestCase
         // Eliminamos al usuario
         $this->delete('user/1')->seeJson(['deleted' => true]);
     }
-
+    
+    public function testValidationErrorOnCreateUser()
+    {
+        $data = $this->getData(['name' => '', 'email' => 'jane']);
+        $this->post('/user', $data)->dump();
+    }
     public function testNotFoundUser()
     {
         $this->get('user/15')->seeJsonEquals(['error' => 'Model not found']);        
@@ -39,15 +44,11 @@ class UserTest extends TestCase
 
     public function testNotFoundHttpException()
     {
-        $this->get('user/12')->seeJsonEquals(['error' => 'Sorry, we can\'t find that.']);        
+        $this->get('user/10')->seeJsonEquals(['error' => 'Sorry, we can\'t find that.']);        
     }
 
 
-    public function testValidationErrorOnCreateUser()
-    {
-        $data = $this->getData(['name' => '', 'email' => 'jane']);
-        $this->post('/user', $data)->dump();
-    }
+    
 
 
 
